@@ -1,9 +1,13 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import { invoke } from '@tauri-apps/api';
 
 function App() {
   const [count, setCount] = useState(0)
+
+  invoke('greet', {name: 'World'})
+    .then((response) => console.log(response));
 
   return (
     <div className="App">
@@ -15,7 +19,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>time to add tailwind</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
