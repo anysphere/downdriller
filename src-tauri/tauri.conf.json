@@ -7,7 +7,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "explorer",
+    "productName": "Downdriller",
     "version": "0.1.0"
   },
   "tauri": {
