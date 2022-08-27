@@ -71,7 +71,7 @@ export function CmdK() {
         onOpenChange={setOpen}
         label="Global Command Menu"
         ref={ref}
-        className="transition absolute left-1/2 transform -translate-x-1/2 right-1/2 top-1/2 -translate-y-1/2 bottom-1/2 w-[640px] h-[300px] bg-green-100 overflow-hidden"
+        className="transition m-auto w-[640px] h-[300px] bg-green-100 overflow-hidden"
         onKeyDown={(e: KeyboardEvent) => {
           if (e.key === "Enter") {
             bounce();
