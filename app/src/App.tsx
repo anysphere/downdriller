@@ -12,7 +12,7 @@ import {
 import { Editor } from "./Editor";
 import { EditorState } from "lexical";
 import { useRef, useEffect, useState } from "react";
-import { CmdK } from "./CmdK";
+import { CmdK } from "./CmdK/CmdK";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
