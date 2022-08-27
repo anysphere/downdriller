@@ -50,7 +50,7 @@ module.exports = {
     "max-depth": ["warn", 4],
     semi: "error", // require semicolons ending statements
     "@typescript-eslint/naming-convention": [
-      "error",
+      "warn",
       // allow UPPER_CASE enum members:
       {
         selector: "enumMember",
@@ -89,6 +89,7 @@ module.exports = {
     "@typescript-eslint/no-inferrable-types": "warn",
     "@typescript-eslint/no-for-in-array": "error",
     "@typescript-eslint/prefer-for-of": "warn",
+    "@typescript-eslint/no-unsafe-assignment": "warn",
     // "@typescript-eslint/no-unsafe-argument": "warn",
     "@typescript-eslint/prefer-nullish-coalescing": "warn",
     "@typescript-eslint/prefer-readonly": "error",
