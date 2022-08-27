@@ -23,7 +23,7 @@ export function Editor({ className }: { className?: string }): JSX.Element {
     editorProps: {
       attributes: {
         class:
-          "prose prose-sm prose-stone sm:prose-stone lg:prose-lg xl:prose-2xl m-5 focus:outline-none",
+          "prose prose-sm prose-stone sm:prose-stone lg:prose-lg xl:prose-2xl m-5 focus:outline-none mx-auto",
       },
     },
   });
