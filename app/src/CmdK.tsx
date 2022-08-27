@@ -102,9 +102,13 @@ export function CmdK() {
             <Command.List className="absolute bottom-0 left-2 right-2 top-16 overflow-scroll text-sm overscroll-contain">
               <Command.Empty>No results found.</Command.Empty>
               {activePage === "home" && (
-                <Home searchProjects={() => setPages([...pages, "projects"])} />
+                <Home
+                  searchProjects={() => setPages([...pages, "projects"])}
+                  enterApiKey={() => setPages([...pages, "apikey"])}
+                />
               )}
               {activePage === "projects" && <Projects />}
+              {activePage === "apikey" && <ApiKey />}
             </Command.List>
           </div>
         </Command.Dialog>
@@ -113,9 +117,22 @@ export function CmdK() {
   );
 }
 
-function Home({ searchProjects }: { searchProjects: Function }) {
+function Home({
+  searchProjects,
+  enterApiKey,
+}: {
+  searchProjects: Function;
+  enterApiKey: Function;
+}) {
   return (
     <>
+      <Item
+        onSelect={() => {
+          enterApiKey();
+        }}
+      >
+        Add API Key
+      </Item>
       <Command.Group heading="Projects">
         <Item
           shortcut="S P"
@@ -168,6 +185,14 @@ function Projects() {
       <Item>Project 4</Item>
       <Item>Project 5</Item>
       <Item>Project 6</Item>
+    </>
+  );
+}
+
+function ApiKey() {
+  return (
+    <>
+      <Item>Enter OpenAI API key: </Item>
     </>
   );
 }

@@ -13,7 +13,7 @@ import { EditorComp } from "./Editor";
 import { Editor } from "@tiptap/react";
 import { $getRoot, EditorState } from "lexical";
 import { useRef, useEffect, useState } from "react";
-import { CmdK } from "./CmdK/CmdK";
+import { CmdK } from "./CmdK";
 import { Configuration, OpenAIApi } from "openai";
 
 function classNames(...classes: string[]) {
