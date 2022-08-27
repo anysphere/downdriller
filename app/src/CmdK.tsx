@@ -28,6 +28,9 @@ export function CmdK() {
     setPages((pages) => {
       const x = [...pages];
       x.splice(-1, 1);
+      if (x.length !== pages.length) {
+        setInputValue("");
+      }
       return x;
     });
   }, []);
@@ -57,6 +60,54 @@ export function CmdK() {
 
       setInputValue("");
     }
+  }
+
+  let bigComponent;
+  switch (activePage) {
+    case "home":
+    case "projects":
+      bigComponent = (
+        <>
+          <div className="absolute top-8 left-0 right-0 pt-0 px-4 pb-4 border-b border-gray-300 flex flex-row gap-2">
+            <Command.Input
+              autoFocus
+              placeholder="What do you need?"
+              className="border-none outline-none "
+              onValueChange={(value) => {
+                setInputValue(value);
+              }}
+              value={inputValue}
+            />
+          </div>
+          <Command.List className="absolute bottom-0 left-2 right-2 top-20 overflow-scroll text-sm overscroll-contain">
+            <Command.Empty>No results found.</Command.Empty>
+            {activePage === "home" && (
+              <Home
+                searchProjects={() => setPages([...pages, "projects"])}
+                enterApiKey={() => setPages([...pages, "apikey"])}
+              />
+            )}
+            {activePage === "projects" && <Projects />}
+          </Command.List>
+        </>
+      );
+      break;
+    case "apikey":
+      bigComponent = (
+        <div className="absolute top-8 left-0 right-0 pt-0 px-4 pb-4 border-b border-gray-300 flex flex-row gap-2">
+          Enter OpenAI API key:
+          <Command.Input
+            autoFocus
+            placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            className="border-none outline-none "
+            onValueChange={(value) => {
+              setInputValue(value);
+            }}
+            value={inputValue}
+          />
+        </div>
+      );
+      break;
   }
 
   return (
@@ -91,25 +142,17 @@ export function CmdK() {
           }}
         >
           <div className="relative w-full h-full ">
-            <Command.Input
-              autoFocus
-              placeholder="What do you need?"
-              className="absolute top-2 left-0 right-0 border-none outline-none pt-2 px-4 pb-4 border-b border-gray-300"
-              onValueChange={(value) => {
-                setInputValue(value);
-              }}
-            />
-            <Command.List className="absolute bottom-0 left-2 right-2 top-16 overflow-scroll text-sm overscroll-contain">
-              <Command.Empty>No results found.</Command.Empty>
-              {activePage === "home" && (
-                <Home
-                  searchProjects={() => setPages([...pages, "projects"])}
-                  enterApiKey={() => setPages([...pages, "apikey"])}
-                />
-              )}
-              {activePage === "projects" && <Projects />}
-              {activePage === "apikey" && <ApiKey />}
-            </Command.List>
+            <div className="flex flex-row gap-2 absolute top-1 left-1">
+              {pages.map((p) => (
+                <div
+                  key={p}
+                  className="text-sm px-1 bg-slate-100 rounded-lg text-slate-500"
+                >
+                  {p}
+                </div>
+              ))}
+            </div>
+            {bigComponent}
           </div>
         </Command.Dialog>
       </div>
