@@ -61,7 +61,7 @@ export function CmdK() {
 
   return (
     <div
-      className="absolute left-0 right-0 top-0 bottom-0 transition bg-yellow-100"
+      className="absolute left-0 right-0 top-0 bottom-0 transition"
       style={{
         backgroundColor: open ? "rgba(0, 0, 0, 0.2)" : "",
       }}
