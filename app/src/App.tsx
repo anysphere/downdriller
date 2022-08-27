@@ -27,10 +27,16 @@ function classNames(...classes: string[]) {
 }
 
 async function readApiKey() {
+  await createDir("data", {
+    dir: BaseDirectory.App,
+    recursive: true,
+  });
+
   try {
-    const contents = await readTextFile(`./apikey.txt`, {
+    const contents = await readTextFile(`data/apikey.txt`, {
       dir: BaseDirectory.App,
     });
+    console.log("API Key:", contents);
     return contents;
   } catch (e) {
     console.log(e);
@@ -38,11 +44,16 @@ async function readApiKey() {
 }
 
 async function writeApiKey(apikey: string) {
+  await createDir("data", {
+    dir: BaseDirectory.App,
+    recursive: true,
+  });
+
   try {
     await writeFile(
       {
         contents: apikey,
-        path: `./apikey.txt`,
+        path: `data/apikey.txt`,
       },
       {
         dir: BaseDirectory.App,
@@ -123,6 +134,7 @@ function App() {
       if (e.key === "Enter" && e.metaKey) {
         if (editorRef.current) {
           const content = editorRef.current.getText();
+          console.log(content);
           void openaicall(content);
           e.preventDefault();
         }
@@ -135,7 +147,17 @@ function App() {
 
   return (
     <>
-      <CmdK writeOpenAiKey={writeApiKey} />
+      <CmdK
+        writeOpenAiKey={(s: string) => {
+          void (async () => {
+            await writeApiKey(s);
+            const configuration = new Configuration({
+              apiKey: await readApiKey(),
+            });
+            setOpenai(new OpenAIApi(configuration));
+          })();
+        }}
+      />
       <div className="absolute top-0 left-0 right-0 bottom-0 h-screen w-screen">
         <EditorComp className="mt-8" editorRef={editorRef} />
       </div>
