@@ -28,14 +28,14 @@ export function EditorComp({
     editorProps: {
       attributes: {
         class:
-          "prose prose-sm prose-stone sm:prose-stone lg:prose-lg xl:prose-2xl m-5 focus:outline-none mx-auto",
+          "prose prose-sm prose-stone focus:outline-none p-2 mx-auto focus:ring-indigo-500 bg-blue-100 focus:border-indigo-500",
       },
     },
   });
   editorRef.current = editor;
 
   return (
-    <div className={`relative mx-auto`}>
+    <div className="fixed top-0 inset-x-0 m-auto w-2/3 h-2/3 block rounded-md  pt-5 max-w-[640px] max-h-[400px]">
       <EditorContent editor={editor} />
     </div>
   );
