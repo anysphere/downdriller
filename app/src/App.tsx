@@ -12,12 +12,45 @@ import {
 import { EditorComp } from "./Editor";
 import { Editor } from "@tiptap/react";
 import { $getRoot, EditorState } from "lexical";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useMemo, useState } from "react";
 import { CmdK } from "./CmdK";
+import {
+  BaseDirectory,
+  createDir,
+  writeFile,
+  readTextFile,
+} from "@tauri-apps/api/fs";
 import { Configuration, OpenAIApi } from "openai";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
+}
+
+async function readApiKey() {
+  try {
+    const contents = await readTextFile(`./apikey.txt`, {
+      dir: BaseDirectory.App,
+    });
+    return contents;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function writeApiKey(apikey: string) {
+  try {
+    await writeFile(
+      {
+        contents: apikey,
+        path: `./apikey.txt`,
+      },
+      {
+        dir: BaseDirectory.App,
+      }
+    );
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function FixMaxPingSound() {
@@ -41,13 +74,22 @@ function App() {
   FixMaxPingSound();
 
   const editorRef = useRef<Editor>(null);
-  const configuration = new Configuration({
-    apiKey: "sk-",
-  });
-  const openai: OpenAIApi = new OpenAIApi(configuration);
+  const [openai, setOpenai] = useState<OpenAIApi | null>(null);
+  useEffect(() => {
+    async function fetch() {
+      const configuration = new Configuration({
+        apiKey: await readApiKey(),
+      });
+      setOpenai(new OpenAIApi(configuration));
+    }
+    void fetch();
+  }, []);
 
   useEffect(() => {
     const openaicall = async (prompt: string) => {
+      if (openai == null) {
+        return;
+      }
       const response = await openai.createCompletion({
         model: "text-davinci-002",
         prompt,
@@ -93,7 +135,7 @@ function App() {
 
   return (
     <>
-      <CmdK />
+      <CmdK writeOpenAiKey={writeApiKey} />
       <div className="absolute top-0 left-0 right-0 bottom-0 h-screen w-screen">
         <EditorComp className="mt-8" editorRef={editorRef} />
       </div>

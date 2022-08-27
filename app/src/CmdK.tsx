@@ -1,7 +1,11 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { Command } from "cmdk";
 
-export function CmdK() {
+export function CmdK({
+  writeOpenAiKey,
+}: {
+  writeOpenAiKey: (apikey: string) => void;
+}) {
   const [open, setOpen] = useState(false);
 
   // Toggle the menu when ⌘K is pressed
@@ -34,20 +38,6 @@ export function CmdK() {
       return x;
     });
   }, []);
-
-  const onKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (isHome || inputValue.length) {
-        return;
-      }
-
-      if (e.key === "Backspace") {
-        e.preventDefault();
-        popPage();
-      }
-    },
-    [inputValue.length, isHome, popPage]
-  );
 
   function bounce() {
     if (ref.current) {
@@ -102,6 +92,12 @@ export function CmdK() {
             className="border-none outline-none "
             onValueChange={(value) => {
               setInputValue(value);
+            }}
+            onKeyDown={(e: KeyboardEvent) => {
+              if (e.key === "Enter") {
+                writeOpenAiKey(inputValue);
+                setOpen(false);
+              }
             }}
             value={inputValue}
           />
