@@ -92,12 +92,12 @@ export function CmdK() {
           <Command.Input
             autoFocus
             placeholder="What do you need?"
-            className="absolute top-2 left-0 right-0 border-none outline-none pt-2 pr-2 pb-4 pl-2 border-b border-gray-300"
+            className="absolute top-2 left-0 right-0 border-none outline-none pt-2 pb-4 px-4 border-b border-gray-300"
             onValueChange={(value) => {
               setInputValue(value);
             }}
           />
-          <Command.List className="absolute bottom-0 left-0 right-0 top-16 overflow-scroll overscroll-contain">
+          <Command.List className="absolute bottom-0 left-2 right-2 top-16 overflow-scroll text-sm overscroll-contain">
             <Command.Empty>No results found.</Command.Empty>
             {activePage === "home" && (
               <Home searchProjects={() => setPages([...pages, "projects"])} />
