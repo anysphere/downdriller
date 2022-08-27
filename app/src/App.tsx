@@ -42,8 +42,11 @@ function App() {
   return (
     <>
       <CmdK />
-      <div className="px-2 py-2">
-        <Editor className="w-full" editorStateRef={editorStateRef} />
+      <div className="absolute top-0 left-0 right-0 bottom-0 h-screen w-screen">
+        <Editor
+          className="h-[calc(100%-1rem)]"
+          editorStateRef={editorStateRef}
+        />
       </div>
     </>
   );

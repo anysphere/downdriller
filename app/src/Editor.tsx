@@ -39,7 +39,7 @@ export function Editor({
       <LexicalComposer initialConfig={initialConfig}>
         <PlainTextPlugin
           contentEditable={
-            <ContentEditable className="min-h-[100px] text-sm outline-none w-full" />
+            <ContentEditable className="min-h-[100px] text-sm outline-none w-full h-full pt-12" />
           }
           placeholder=""
         />
