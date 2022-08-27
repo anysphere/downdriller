@@ -29,11 +29,7 @@ export function Editor({ className }: { className?: string }): JSX.Element {
   });
 
   return (
-    <div
-      className={`prose prose-sm prose-stone outline-none relative ${
-        className ?? ""
-      } mx-auto`}
-    >
+    <div className={`relative ${className ?? ""} mx-auto`}>
       <EditorContent editor={editor} />
     </div>
   );
