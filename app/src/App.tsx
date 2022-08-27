@@ -97,46 +97,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const openaicall = async (prompt: string) => {
-      if (openai == null) {
-        return;
-      }
-      const response = await openai.createCompletion({
-        model: "text-davinci-002",
-        prompt,
-        temperature: 0.7,
-        max_tokens: 256,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-      });
-      const choices = response.data.choices;
-      if (choices == null) {
-        return;
-      }
-      const choice = choices[0];
-      if (choice == null) {
-        return;
-      }
-      const text = choice.text;
-      if (text == null) {
-        return;
-      }
-      const editor = editorRef.current;
-      if (editor == null) {
-        return;
-      }
-      editor.chain().insertContent(text).run();
-      console.log(text);
-    };
-
     const cmdenter = (e: KeyboardEvent) => {
       if (e.key === "Enter" && e.metaKey) {
+        e.preventDefault();
         if (editorRef.current) {
           const content = editorRef.current.getText();
           console.log(content);
           void openaicall(content);
-          e.preventDefault();
         }
       }
     };
@@ -159,7 +126,11 @@ function App() {
         }}
       />
       <div className="absolute top-0 left-0 right-0 bottom-0 h-screen w-screen">
-        <EditorComp className="mt-8 mb-8" editorRef={editorRef} />
+        <EditorComp
+          className="mt-8 mb-8"
+          editorRef={editorRef}
+          openai={openai ?? undefined}
+        />
       </div>
     </>
   );
