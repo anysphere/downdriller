@@ -60,49 +60,57 @@ export function CmdK() {
   }
 
   return (
-    <Command.Dialog
-      open={open}
-      onOpenChange={setOpen}
-      label="Global Command Menu"
-      ref={ref}
-      // onKeyDown={(e: KeyboardEvent) => {
-      //   if (e.key === "Enter") {
-      //     bounce();
-      //   }
-
-      //   if (isHome || inputValue.length) {
-      //     return;
-      //   }
-
-      //   if (e.key === "Backspace") {
-      //     e.preventDefault();
-      //     popPage();
-      //     bounce();
-      //   }
-      // }}
+    <div
+      className="absolute left-0 right-0 top-0 bottom-0 transition"
+      style={{
+        backgroundColor: open ? "rgba(0, 0, 0, 0.5)" : "",
+      }}
     >
-      <div>
-        {pages.map((p) => (
-          <div key={p} cmdk-vercel-badge="">
-            {p}
-          </div>
-        ))}
-      </div>
-      <Command.Input
-        autoFocus
-        placeholder="What do you need?"
-        onValueChange={(value) => {
-          setInputValue(value);
+      <Command.Dialog
+        open={open}
+        onOpenChange={setOpen}
+        label="Global Command Menu"
+        ref={ref}
+        className="transition absolute left-1/2 transform -translate-x-1/2 right-1/2 top-1/2 -translate-y-1/2 bottom-1/2 w-[640px] h-[400px] bg-green-100 overflow-hidden"
+        onKeyDown={(e: KeyboardEvent) => {
+          if (e.key === "Enter") {
+            bounce();
+          }
+
+          if (isHome || inputValue.length) {
+            return;
+          }
+
+          if (e.key === "Backspace") {
+            e.preventDefault();
+            popPage();
+            bounce();
+          }
         }}
-      />
-      <Command.List>
-        <Command.Empty>No results found.</Command.Empty>
-        {activePage === "home" && (
-          <Home searchProjects={() => setPages([...pages, "projects"])} />
-        )}
-        {activePage === "projects" && <Projects />}
-      </Command.List>
-    </Command.Dialog>
+      >
+        <div>
+          {pages.map((p) => (
+            <div key={p} cmdk-vercel-badge="">
+              {p}
+            </div>
+          ))}
+        </div>
+        <Command.Input
+          autoFocus
+          placeholder="What do you need?"
+          onValueChange={(value) => {
+            setInputValue(value);
+          }}
+        />
+        <Command.List>
+          <Command.Empty>No results found.</Command.Empty>
+          {activePage === "home" && (
+            <Home searchProjects={() => setPages([...pages, "projects"])} />
+          )}
+          {activePage === "projects" && <Projects />}
+        </Command.List>
+      </Command.Dialog>
+    </div>
   );
 }
 
