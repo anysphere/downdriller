@@ -5,7 +5,7 @@
 
 import { MutableRefObject, useEffect, useState } from "react";
 
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
 import { OpenAIApi, CreateCompletionResponse } from "openai";
@@ -15,8 +15,13 @@ const theme = {};
 type CustomElement = { type: "paragraph"; children: CustomText[] };
 type CustomText = { text: string };
 
-
-export function Editor({ className }: { className?: string }): JSX.Element {
+export function EditorComp({
+  className,
+  editorRef,
+}: {
+  className?: string;
+  editorRef: MutableRefObject<Editor | null>;
+}): JSX.Element {
   const editor = useEditor({
     extensions: [StarterKit],
     content: "<p>Hello World!</p>",
@@ -27,6 +32,7 @@ export function Editor({ className }: { className?: string }): JSX.Element {
       },
     },
   });
+  editorRef.current = editor;
 
   return (
     <div className={`relative mx-auto`}>

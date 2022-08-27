@@ -9,7 +9,8 @@ import {
   UsersIcon,
   XIcon,
 } from "@heroicons/react/outline";
-import { Editor } from "./Editor";
+import { EditorComp } from "./Editor";
+import { Editor } from "@tiptap/react";
 import { $getRoot, EditorState } from "lexical";
 import { useRef, useEffect, useState } from "react";
 import { CmdK } from "./CmdK/CmdK";
@@ -39,9 +40,9 @@ function FixMaxPingSound() {
 function App() {
   FixMaxPingSound();
 
-  const editorStateRef = useRef<EditorState>(null);
+  const editorRef = useRef<Editor>(null);
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: "sk-",
   });
   const openai: OpenAIApi = new OpenAIApi(configuration);
 
@@ -56,35 +57,45 @@ function App() {
         frequency_penalty: 0,
         presence_penalty: 0,
       });
-      console.log(response);
+      const choices = response.data.choices;
+      if (choices == null) {
+        return;
+      }
+      const choice = choices[0];
+      if (choice == null) {
+        return;
+      }
+      const text = choice.text;
+      if (text == null) {
+        return;
+      }
+      const editor = editorRef.current;
+      if (editor == null) {
+        return;
+      }
+      editor.chain().insertContent(text).run();
+      console.log(text);
     };
 
-    // const cmdenter = (e: KeyboardEvent) => {
-    //   if (e.key === "Enter" && e.metaKey) {
-    //     let content = "";
-    //     editor.getEditorState().read(() => {
-    //       content = $getRoot().getTextContent();
-    //     });
-    //     void openaicall(content);
-    //     e.preventDefault();
-    //   }
-    // };
+    const cmdenter = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && e.metaKey) {
+        if (editorRef.current) {
+          const content = editorRef.current.getText();
+          void openaicall(content);
+          e.preventDefault();
+        }
+      }
+    };
 
-    // document.addEventListener("keydown", cmdenter);
-    // return () => document.removeEventListener("keydown", cmdenter);
-
-    return;
+    document.addEventListener("keydown", cmdenter);
+    return () => document.removeEventListener("keydown", cmdenter);
   });
 
   return (
     <>
       <CmdK />
       <div className="absolute top-0 left-0 right-0 bottom-0 h-screen w-screen">
-        <Editor
-          className="h-[calc(100%-1rem)]"
-          editorStateRef={editorStateRef}
-          openai={openai}
-        />
+        <EditorComp className="h-[calc(100%-1rem)]" editorRef={editorRef} />
       </div>
     </>
   );
