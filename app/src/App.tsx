@@ -25,7 +25,7 @@ function App() {
     <div className="absolute top-0 left-0 right-0 bottom-0">
       <CmdK />
       <div className="px-2 py-2 bg-red-100">
-        <Editor className="w-full" editorStateRef={editorStateRef} />
+        {/* <Editor className="w-full" editorStateRef={editorStateRef} /> */}
       </div>
     </div>
   );

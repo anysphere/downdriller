@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Command } from "cmdk";
 
 export function CmdK() {
@@ -9,12 +9,13 @@ export function CmdK() {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && e.metaKey) {
         setOpen((open) => !open);
+        console.log("open", open);
       }
     };
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
-  }, []);
+  }, [open]);
 
   const ref = useRef<HTMLDivElement | null>(null);
   const [inputValue, setInputValue] = useState("");
