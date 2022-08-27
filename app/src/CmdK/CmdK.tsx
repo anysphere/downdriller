@@ -71,7 +71,7 @@ export function CmdK() {
         onOpenChange={setOpen}
         label="Global Command Menu"
         ref={ref}
-        className="transition m-auto w-[640px] h-[300px] bg-green-100 overflow-hidden"
+        className="transition m-auto w-[640px] h-[300px] overflow-hidden rounded-lg bg-white"
         onKeyDown={(e: KeyboardEvent) => {
           if (e.key === "Enter") {
             bounce();
@@ -88,7 +88,7 @@ export function CmdK() {
           }
         }}
       >
-        <div className="relative w-full h-full bg-blue-100">
+        <div className="relative w-full h-full bg-white">
           <Command.Input
             autoFocus
             placeholder="What do you need?"
@@ -97,7 +97,7 @@ export function CmdK() {
               setInputValue(value);
             }}
           />
-          <Command.List className="absolute bottom-0 left-0 right-0 top-16 overflow-scroll bg-red-100 overscroll-contain">
+          <Command.List className="absolute bottom-0 left-0 right-0 top-16 overflow-scroll overscroll-contain">
             <Command.Empty>No results found.</Command.Empty>
             {activePage === "home" && (
               <Home searchProjects={() => setPages([...pages, "projects"])} />
@@ -172,7 +172,7 @@ function Projects() {
 function Item({
   children,
   shortcut,
-  onSelect = () => {},
+  onSelect,
 }: {
   children: React.ReactNode;
   shortcut?: string;
@@ -184,13 +184,17 @@ function Item({
       className="cursor-pointer h-12 flex align-center gap-2 py-0 px-4 unselectable"
     >
       {children}
-      {shortcut && (
-        <div cmdk-vercel-shortcuts="">
+      {shortcut != null ? (
+        <div className="flex gap-2">
           {shortcut.split(" ").map((key) => {
-            return <kbd key={key}>{key}</kbd>;
+            return (
+              <kbd className="p-2 h-8 rounded-sm bg-gray-100" key={key}>
+                {key}
+              </kbd>
+            );
           })}
         </div>
-      )}
+      ) : null}
     </Command.Item>
   );
 }
