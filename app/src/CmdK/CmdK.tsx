@@ -61,51 +61,54 @@ export function CmdK() {
 
   return (
     <div
-      className="absolute left-0 right-0 top-0 bottom-0 transition"
+      className=""
       style={{
         backgroundColor: open ? "rgba(0, 0, 0, 0.2)" : "",
       }}
     >
-      <Command.Dialog
-        open={open}
-        onOpenChange={setOpen}
-        label="Global Command Menu"
-        ref={ref}
-        className="transition m-auto w-[640px] h-[300px] overflow-hidden rounded-lg bg-white"
-        onKeyDown={(e: KeyboardEvent) => {
-          if (e.key === "Enter") {
-            bounce();
-          }
+      {open && <div className="fixed inset-0 bg-gray-400/95" />}
+      <div className="place-self-center bg-green-100 ">
+        <Command.Dialog
+          open={open}
+          onOpenChange={setOpen}
+          label="Global Command Menu"
+          ref={ref}
+          className="fixed inset-0 top-0 z-50 transition overflow-y-auto max-w-[640px] m-auto max-h-[400px] rounded-lg bg-white"
+          onKeyDown={(e: KeyboardEvent) => {
+            if (e.key === "Enter") {
+              bounce();
+            }
 
-          if (isHome || inputValue.length) {
-            return;
-          }
+            if (isHome || inputValue.length) {
+              return;
+            }
 
-          if (e.key === "Backspace") {
-            e.preventDefault();
-            popPage();
-            bounce();
-          }
-        }}
-      >
-        <div className="relative w-full h-full bg-white">
-          <Command.Input
-            autoFocus
-            placeholder="What do you need?"
-            className="absolute top-2 left-0 right-0 border-none outline-none pt-2 pb-4 px-4 border-b border-gray-300"
-            onValueChange={(value) => {
-              setInputValue(value);
-            }}
-          />
-          <Command.List className="absolute bottom-0 left-2 right-2 top-16 overflow-scroll text-sm overscroll-contain">
-            <Command.Empty>No results found.</Command.Empty>
-            {activePage === "home" && (
-              <Home searchProjects={() => setPages([...pages, "projects"])} />
-            )}
-            {activePage === "projects" && <Projects />}
-          </Command.List>
-        </div>
-      </Command.Dialog>
+            if (e.key === "Backspace") {
+              e.preventDefault();
+              popPage();
+              bounce();
+            }
+          }}
+        >
+          <div className="relative w-full h-full ">
+            <Command.Input
+              autoFocus
+              placeholder="What do you need?"
+              className="absolute top-2 left-0 right-0 border-none outline-none pt-2 px-4 pb-4 border-b border-gray-300"
+              onValueChange={(value) => {
+                setInputValue(value);
+              }}
+            />
+            <Command.List className="absolute bottom-0 left-2 right-2 top-16 overflow-scroll text-sm overscroll-contain">
+              <Command.Empty>No results found.</Command.Empty>
+              {activePage === "home" && (
+                <Home searchProjects={() => setPages([...pages, "projects"])} />
+              )}
+              {activePage === "projects" && <Projects />}
+            </Command.List>
+          </div>
+        </Command.Dialog>
+      </div>
     </div>
   );
 }
