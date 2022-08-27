@@ -95,7 +95,7 @@ function App() {
     <>
       <CmdK />
       <div className="absolute top-0 left-0 right-0 bottom-0 h-screen w-screen">
-        <EditorComp className="h-[calc(100%-1rem)]" editorRef={editorRef} />
+        <EditorComp className="mt-8" editorRef={editorRef} />
       </div>
     </>
   );
