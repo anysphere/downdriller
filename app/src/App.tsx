@@ -22,9 +22,9 @@ function App() {
   const editorStateRef = useRef<EditorState>(null);
 
   return (
-    <>
-      <Editor focused={true} editorStateRef={editorStateRef} />
-    </>
+    <div className="px-2 py-2">
+      <Editor className="w-full" editorStateRef={editorStateRef} />
+    </div>
   );
 }
 
