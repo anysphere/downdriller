@@ -181,7 +181,7 @@ function Item({
   return (
     <Command.Item
       onSelect={onSelect}
-      className="cursor-pointer h-12 flex align-center gap-2 py-0 px-4 unselectable"
+      className="cursor-pointer h-12 flex align-center gap-2 py-0 px-4 unselectable active:bg-gray-100 hover:bg-gray-100"
     >
       {children}
       {shortcut != null ? (
