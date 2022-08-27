@@ -7,7 +7,7 @@
 #[macro_use]
 extern crate objc;
 
-use tauri::{Manager, WindowEvent};
+use tauri::Manager;
 use window_ext::WindowExt;
 
 mod window_ext;
