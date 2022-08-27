@@ -15,33 +15,17 @@ const theme = {};
 type CustomElement = { type: "paragraph"; children: CustomText[] };
 type CustomText = { text: string };
 
-declare module "slate" {
-  interface CustomTypes {
-    Editor: BaseEditor & ReactEditor;
-    Element: CustomElement;
-    Text: CustomText;
-  }
-}
 
-const initialValue: Descendant[] = [
-  {
-    type: "paragraph",
-    children: [{ text: "A line of text in a paragraph." }],
-  },
-];
-
-export function Editor({
-  editorStateRef,
-  className,
-  openai,
-}: {
-  editorStateRef: MutableRefObject<null>;
-  className?: string;
-  openai: OpenAIApi;
-}): JSX.Element {
+export function Editor({ className }: { className?: string }): JSX.Element {
   const editor = useEditor({
     extensions: [StarterKit],
     content: "<p>Hello World!</p>",
+    editorProps: {
+      attributes: {
+        class:
+          "prose prose-sm prose-stone sm:prose-stone lg:prose-lg xl:prose-2xl m-5 focus:outline-none",
+      },
+    },
   });
 
   return (
