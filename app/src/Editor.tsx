@@ -6,6 +6,7 @@
 import { MutableRefObject, useEffect, useState } from "react";
 
 import { useEditor, EditorContent, Editor } from "@tiptap/react";
+import Link from "@tiptap/extension-link";
 import StarterKit from "@tiptap/starter-kit";
 import { classNames } from "./utils";
 
@@ -24,12 +25,18 @@ export function EditorComp({
   editorRef: MutableRefObject<Editor | null>;
 }): JSX.Element {
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit,
+      Link.configure({
+        openOnClick: false,
+        protocols: ["http", "https", "mailto"],
+      }),
+    ],
     content: "<p>Hello World!</p>",
     editorProps: {
       attributes: {
         class:
-          "prose prose-sm prose-stone focus:outline-none p-2 mx-auto focus:ring-indigo-500 focus:border-indigo-500 h-[calc(100vh-2rem)]",
+          "leading-normal prose prose-sm prose-stone focus:outline-none p-2 mx-auto rounded-md overflow-auto focus:ring-2 focus:ring-indigo-500 h-[calc(100vh-4rem)] bg-blue-100 prose-p:mt-0 prose-p:mb-0",
       },
     },
   });

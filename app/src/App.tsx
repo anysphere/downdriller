@@ -159,7 +159,7 @@ function App() {
         }}
       />
       <div className="absolute top-0 left-0 right-0 bottom-0 h-screen w-screen">
-        <EditorComp className="mt-8" editorRef={editorRef} />
+        <EditorComp className="mt-8 mb-8" editorRef={editorRef} />
       </div>
     </>
   );
