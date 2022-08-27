@@ -22,7 +22,11 @@ function FixMaxPingSound() {
   useEffect(() => {
     const sound = (event: KeyboardEvent) => {
       const ele = event.composedPath()[0];
-      if (ele instanceof HTMLInputElement || ele instanceof HTMLAreaElement)
+      if (
+        ele instanceof HTMLInputElement ||
+        ele instanceof HTMLAreaElement ||
+        ele instanceof HTMLDivElement
+      )
         return;
       event.preventDefault();
     };
