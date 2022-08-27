@@ -61,9 +61,9 @@ export function CmdK() {
 
   return (
     <div
-      className="absolute left-0 right-0 top-0 bottom-0 transition"
+      className="absolute left-0 right-0 top-0 bottom-0 transition bg-yellow-100"
       style={{
-        backgroundColor: open ? "rgba(0, 0, 0, 0.5)" : "",
+        backgroundColor: open ? "rgba(0, 0, 0, 0.2)" : "",
       }}
     >
       <Command.Dialog
@@ -71,7 +71,7 @@ export function CmdK() {
         onOpenChange={setOpen}
         label="Global Command Menu"
         ref={ref}
-        className="transition absolute left-1/2 transform -translate-x-1/2 right-1/2 top-1/2 -translate-y-1/2 bottom-1/2 w-[640px] h-[400px] bg-green-100 overflow-hidden"
+        className="transition absolute left-1/2 transform -translate-x-1/2 right-1/2 top-1/2 -translate-y-1/2 bottom-1/2 w-[640px] h-[300px] bg-green-100 overflow-hidden"
         onKeyDown={(e: KeyboardEvent) => {
           if (e.key === "Enter") {
             bounce();
@@ -88,27 +88,30 @@ export function CmdK() {
           }
         }}
       >
-        <div>
-          {pages.map((p) => (
-            <div key={p} cmdk-vercel-badge="">
-              {p}
-            </div>
-          ))}
+        <div className="relative w-full h-full bg-blue-100">
+          <div>
+            {pages.map((p) => (
+              <div key={p} cmdk-vercel-badge="">
+                {p}
+              </div>
+            ))}
+          </div>
+          <Command.Input
+            autoFocus
+            placeholder="What do you need?"
+            className="border-none outline-none w-full pt-2 pr-2 pb-4 pl-2 border-b border-gray-300 mb-4"
+            onValueChange={(value) => {
+              setInputValue(value);
+            }}
+          />
+          <Command.List className="absolute bottom-0 left-0 right-0 top-24 overflow-scroll bg-red-100 overscroll-contain">
+            <Command.Empty>No results found.</Command.Empty>
+            {activePage === "home" && (
+              <Home searchProjects={() => setPages([...pages, "projects"])} />
+            )}
+            {activePage === "projects" && <Projects />}
+          </Command.List>
         </div>
-        <Command.Input
-          autoFocus
-          placeholder="What do you need?"
-          onValueChange={(value) => {
-            setInputValue(value);
-          }}
-        />
-        <Command.List>
-          <Command.Empty>No results found.</Command.Empty>
-          {activePage === "home" && (
-            <Home searchProjects={() => setPages([...pages, "projects"])} />
-          )}
-          {activePage === "projects" && <Projects />}
-        </Command.List>
       </Command.Dialog>
     </div>
   );
@@ -183,7 +186,10 @@ function Item({
   onSelect?: (value: string) => void;
 }) {
   return (
-    <Command.Item onSelect={onSelect}>
+    <Command.Item
+      onSelect={onSelect}
+      className="cursor-pointer h-12 flex align-center gap-2 py-0 px-4 unselectable"
+    >
       {children}
       {shortcut && (
         <div cmdk-vercel-shortcuts="">

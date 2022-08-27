@@ -5,3 +5,7 @@
 body {
   background-color: white;
 }
+
+.unselectable {
+  user-select: none;
+}
