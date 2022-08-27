@@ -181,14 +181,14 @@ function Item({
   return (
     <Command.Item
       onSelect={onSelect}
-      className="cursor-pointer h-12 flex align-center gap-2 py-0 px-4 unselectable active:bg-gray-100 hover:bg-gray-100"
+      className="cursor-pointer h-12 flex items-center gap-2 py-0 px-4 unselectable active:bg-gray-100 hover:bg-gray-100"
     >
       {children}
       {shortcut != null ? (
         <div className="flex gap-2">
           {shortcut.split(" ").map((key) => {
             return (
-              <kbd className="p-2 h-8 rounded-sm bg-gray-100" key={key}>
+              <kbd className="p-2 pt-1 h-8 rounded-sm bg-gray-100" key={key}>
                 {key}
               </kbd>
             );
