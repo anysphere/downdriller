@@ -5,8 +5,8 @@
 
 import { MutableRefObject, useEffect, useState } from "react";
 
-import { createEditor, BaseEditor, Descendant } from "slate";
-import { ReactEditor, Slate, Editable, withReact } from "slate-react";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 
 import { OpenAIApi, CreateCompletionResponse } from "openai";
 
@@ -39,7 +39,10 @@ export function Editor({
   className?: string;
   openai: OpenAIApi;
 }): JSX.Element {
-  const [editor] = useState(() => withReact(createEditor()));
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: "<p>Hello World!</p>",
+  });
 
   return (
     <div
@@ -47,9 +50,7 @@ export function Editor({
         className ?? ""
       } mx-auto`}
     >
-      <Slate editor={editor} value={initialValue}>
-        <Editable className="min-h-[100px] text-sm outline-none w-full h-full pt-12" />
-      </Slate>
+      <EditorContent editor={editor} />
     </div>
   );
 }
