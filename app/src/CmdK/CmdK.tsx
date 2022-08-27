@@ -9,7 +9,7 @@ export function CmdK() {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && e.metaKey) {
         setOpen((open) => !open);
-        console.log("open", open);
+        e.preventDefault();
       }
     };
 

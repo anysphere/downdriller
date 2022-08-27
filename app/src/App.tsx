@@ -18,7 +18,21 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
+function FixMaxPingSound() {
+  useEffect(() => {
+    const sound = (event: KeyboardEvent) => {
+      const ele = event.composedPath()[0];
+      if (ele instanceof HTMLInputElement || ele instanceof HTMLAreaElement)
+        return;
+      event.preventDefault();
+    };
+    document.addEventListener("keypress", sound);
+    return () => document.removeEventListener("keypress", sound);
+  }, []);
+}
+
 function App() {
+  FixMaxPingSound();
   const editorStateRef = useRef<EditorState>(null);
 
   return (
