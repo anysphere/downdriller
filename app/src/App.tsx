@@ -13,14 +13,9 @@ import {
 import { Editor } from "./Editor";
 import { EditorState } from "lexical";
 import { useRef } from "react";
-import CommandPalette, { useHandleOpenCommandPalette } from "./cmdk";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
-}
-
-enum CommandPalettePage {
-  Root = "ROOT",
 }
 
 function App() {
